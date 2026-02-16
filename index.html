@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SamajSetu | Government Portal</title>
+    <style>
+        :root { --gov-blue: #0056b3; --gov-dark: #003366; --gov-orange: #ff9933; --light: #f4f7f6; --success: #28a745; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; background: var(--light); color: #333; }
+        
+        nav { background: white; padding: 12px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; }
+        .logo { font-weight: bold; font-size: 22px; color: var(--gov-dark); display: flex; align-items: center; gap: 8px; }
+        .nav-links button { background: none; border: none; margin-left: 15px; cursor: pointer; color: #555; font-size: 14px; }
+
+        .hero { background: var(--gov-blue); color: white; padding: 70px 10%; text-align: center; }
+        .hero h1 { font-size: 45px; margin: 0 0 15px 0; font-weight: 700; }
+        .hero p { font-size: 17px; margin-bottom: 35px; opacity: 0.9; max-width: 800px; margin-left: auto; margin-right: auto; line-height: 1.5; }
+        .btn-group { display: flex; justify-content: center; gap: 15px; }
+        .btn { padding: 12px 30px; border-radius: 5px; border: none; font-weight: bold; cursor: pointer; font-size: 15px; }
+        .btn-green { background: #28a745; color: white; }
+        .btn-white { background: white; color: var(--gov-blue); }
+
+        .lang-switch { text-align: right; padding: 5px 5%; background: #fdfdfd; font-size: 13px; border-bottom: 1px solid #eee; }
+        .lang-switch span { cursor: pointer; margin-left: 10px; color: var(--gov-blue); font-weight: bold; }
+
+        .section { display: none; padding: 40px 10%; }
+        .active { display: block; }
+
+        .card { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); max-width: 700px; margin: 0 auto; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .form-group { margin-bottom: 15px; text-align: left; }
+        label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 14px; }
+        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        
+        .progress-track { background: #eee; height: 10px; border-radius: 10px; margin: 20px 0; overflow: hidden; }
+        .progress-fill { background: var(--gov-orange); height: 100%; width: 45%; }
+
+        footer { background: #222; color: white; padding: 40px; text-align: center; margin-top: 50px; }
+    </style>
+</head>
+<body>
+
+<div class="lang-switch">
+    <span onclick="translatePage('en')">English</span> | 
+    <span onclick="translatePage('hi')">हिंदी</span> | 
+    <span onclick="translatePage('mr')">मराठी</span>
+</div>
+
+<nav>
+    <div class="logo">🌉 SAMAJSETU</div>
+    <div class="nav-links">
+        <button onclick="showPage('home')" id="nav-home">Home</button>
+        <button onclick="showPage('login-gate')" id="nav-login">Citizen Login</button>
+        <button onclick="showPage('admin-login')" id="nav-admin">Admin Portal</button>
+    </div>
+</nav>
+
+<div id="home" class="section active">
+    <div class="hero">
+        <h1 id="t-welcome">Welcome to SAMAJSETU</h1>
+        <p id="t-hero-sub">Your voice matters! Report social service issues instantly and track resolution in real-time. Bridging the gap between citizens and government.</p>
+        <div class="btn-group">
+            <button class="btn btn-green" onclick="showPage('register-issue')" id="t-get-started">Get Started</button>
+            <button class="btn btn-white" onclick="showPage('login-gate')" id="t-sign-in">Sign In</button>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px;">
+        <h2 id="t-why">Why SAMAJSETU?</h2>
+        <p id="t-why-sub">A unified platform for Water, Road, and Street Light grievances.</p>
+    </div>
+</div>
+
+<div id="login-gate" class="section">
+    <div class="card" style="max-width: 450px;">
+        <h2 id="t-login-title">Login to Your Account</h2>
+        <div class="form-group">
+            <label id="lbl-login-id">Phone Number / Email</label>
+            <input type="text" placeholder="Enter credentials">
+        </div>
+        <button class="btn btn-green" style="width:100%" onclick="showPage('citizen-dashboard')" id="btn-login-final">Login</button>
+    </div>
+</div>
+
+<div id="admin-login" class="section">
+    <div class="card" style="max-width: 400px; border-top: 5px solid #333;">
+        <h2 id="t-admin-head">Admin Department Login</h2>
+        <div class="form-group">
+            <label id="lbl-admin-id">Officer ID</label>
+            <input type="text" placeholder="ADM-XXXX">
+        </div>
+        <div class="form-group">
+            <label id="lbl-admin-pass">Security Code</label>
+            <input type="password" placeholder="••••">
+        </div>
+        <button class="btn btn-white" style="width:100%; border: 1px solid #333;" onclick="showPage('admin-dashboard')" id="btn-admin-login">Access Admin Panel</button>
+    </div>
+</div>
+
+<div id="register-issue" class="section">
+    <div class="card">
+        <h2 id="t-form-title">Submit Community Complaint</h2>
+        <div class="form-grid">
+            <div class="form-group">
+                <label id="lbl-uname">Username / Name</label>
+                <input type="text" placeholder="Full Name">
+            </div>
+            <div class="form-group">
+                <label id="lbl-email">Email Address</label>
+                <input type="email" placeholder="email@example.com">
+            </div>
+            <div class="form-group">
+                <label id="lbl-phone">Phone Number</label>
+                <input type="tel" placeholder="+91">
+            </div>
+            <div class="form-group">
+                <label id="lbl-state">State</label>
+                <select>
+                    <option>Maharashtra</option>
+                    <option>Delhi</option>
+                    <option>Gujarat</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label id="lbl-place">Place / City</label>
+                <input type="text" placeholder="City Name">
+            </div>
+            <div class="form-group">
+                <label id="lbl-pin">Pincode</label>
+                <input type="number" placeholder="400XXX">
+            </div>
+        </div>
+        <hr>
+        <div class="form-group">
+            <label id="lbl-category">Issue Category</label>
+            <select id="issue-select">
+                <option>Water Shortage / Leakage</option>
+                <option>Street Lamp Issue</option>
+                <option>Road Damage / Potholes</option>
+                <option>Other (Please Specify)</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label id="lbl-upload">Upload Image of Issue</label>
+            <input type="file" accept="image/*">
+        </div>
+        <button class="btn btn-green" style="width:100%" onclick="submitComplaint()" id="btn-submit-issue">Submit & Generate ID</button>
+    </div>
+</div>
+
+<div id="citizen-dashboard" class="section">
+    <h2 id="t-status-head">My Complaint Status</h2>
+    <div class="card">
+        <div style="display:flex; justify-content: space-between; align-items: center;">
+            <strong id="t-active-issue">Issue: Street Light Not Working</strong>
+            <span style="background: #fff3cd; padding: 5px 10px; border-radius: 5px; font-size: 12px;" id="t-status-label">IN-PROGRESS</span>
+        </div>
+        <p style="color: #666; font-size: 13px;">ID: SS-7721 | Date: Feb 16, 2026</p>
+        <div class="progress-track"><div class="progress-fill"></div></div>
+        <div style="display:flex; justify-content: space-between; font-size: 11px; font-weight: bold;">
+            <span id="prog-1">Reported</span><span id="prog-2">Assigned</span><span id="prog-3" style="color:var(--gov-orange)">Repairing</span><span id="prog-4">Resolved</span>
+        </div>
+        <hr style="margin-top: 30px;">
+        <div class="form-group">
+            <label id="lbl-feedback">Give Your Feedback</label>
+            <textarea placeholder="How was our service?"></textarea>
+            <button class="btn btn-green" style="margin-top:10px; padding: 8px 15px;" id="btn-feedback">Send Feedback</button>
+        </div>
+    </div>
+</div>
+
+<div id="admin-dashboard" class="section">
+    <h2 id="t-admin-panel">Administrative Control Panel</h2>
+    <div style="display:flex; gap: 20px; margin-bottom: 20px;">
+        <div class="card" style="flex:1; background: #e8f5e9; text-align: center;"><h3 id="adm-res">Resolved: 840</h3></div>
+        <div class="card" style="flex:1; background: #fff3e0; text-align: center;"><h3 id="adm-pen">Pending: 124</h3></div>
+    </div>
+    <div class="card" style="max-width: 100%;">
+        <h3 id="adm-griev">Recent Grievances</h3>
+        <table style="width:100%; border-collapse: collapse; font-size: 14px;">
+            <tr style="background:#eee; text-align: left;">
+                <th style="padding:10px;">ID</th><th id="th-user">User</th><th id="th-loc">Location</th><th id="th-iss">Issue</th><th>Action</th>
+            </tr>
+            <tr>
+                <td style="padding:10px;">SS-7721</td><td>Rahul S.</td><td>Karjat, 410201</td><td>Water Leak</td><td><button>Update</button></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<footer>
+    <p id="t-footer">Helpline: 1800-444-5555 | support@samajsetu.gov.in</p>
+    <p>&copy; 2026 SamajSetu Digital India</p>
+</footer>
+
+<script>
+    const lang = {
+        en: {
+            "t-welcome": "Welcome to SAMAJSETU", "t-hero-sub": "Your voice matters! Report social service issues instantly and track resolution in real-time.", "t-get-started": "Get Started", "t-sign-in": "Sign In", "t-why": "Why SAMAJSETU?", "t-why-sub": "A unified platform for Water, Road, and Street Light grievances.",
+            "nav-home": "Home", "nav-login": "Citizen Login", "nav-admin": "Admin Portal", "t-login-title": "Login to Your Account", "lbl-login-id": "Phone Number / Email", "btn-login-final": "Login",
+            "t-form-title": "Submit Community Complaint", "lbl-uname": "Username / Name", "lbl-email": "Email Address", "lbl-phone": "Phone Number", "lbl-state": "State", "lbl-place": "Place / City", "lbl-pin": "Pincode", "lbl-category": "Issue Category", "lbl-upload": "Upload Image", "btn-submit-issue": "Submit & Generate ID",
+            "t-status-head": "My Complaint Status", "t-status-label": "IN-PROGRESS", "prog-1": "Reported", "prog-2": "Assigned", "prog-3": "Repairing", "prog-4": "Resolved", "lbl-feedback": "Give Your Feedback", "btn-feedback": "Send Feedback",
+            "t-admin-panel": "Administrative Control Panel", "adm-res": "Resolved: 840", "adm-pen": "Pending: 124", "adm-griev": "Recent Grievances", "t-footer": "Helpline: 1800-444-5555 | support@samajsetu.gov.in"
+        },
+        hi: {
+            "t-welcome": "समाजसेतु में आपका स्वागत है", "t-hero-sub": "आपकी आवाज़ मायने रखती है! समस्याओं की तुरंत रिपोर्ट करें और समाधान को ट्रैक करें।", "t-get-started": "शुरू करें", "t-sign-in": "साइन इन", "t-why": "समाजसेतु क्यों?", "t-why-sub": "पानी, सड़क और बिजली की शिकायतों के लिए एक मंच।",
+            "nav-home": "होम", "nav-login": "नागरिक लॉगिन", "nav-admin": "एडमिन पोर्टल", "t-login-title": "अपने खाते में लॉगिन करें", "lbl-login-id": "फोन नंबर / ईमेल", "btn-login-final": "लॉगिन",
+            "t-form-title": "सामुदायिक शिकायत जमा करें", "lbl-uname": "उपयोगकर्ता नाम / नाम", "lbl-email": "ईमेल पता", "lbl-phone": "फोन नंबर", "lbl-state": "राज्य", "lbl-place": "स्थान / शहर", "lbl-pin": "पिनकोड", "lbl-category": "समस्या की श्रेणी", "lbl-upload": "छवि अपलोड करें", "btn-submit-issue": "जमा करें और आईडी बनाएं",
+            "t-status-head": "मेरी शिकायत की स्थिति", "t-status-label": "प्रगति पर है", "prog-1": "दर्ज", "prog-2": "सौंपा गया", "prog-3": "मरम्मत जारी", "prog-4": "समाधानित", "lbl-feedback": "अपनी प्रतिक्रिया दें", "btn-feedback": "प्रतिक्रिया भेजें",
+            "t-admin-panel": "प्रशासनिक नियंत्रण कक्ष", "adm-res": "समाधानित: 840", "adm-pen": "लंबित: 124", "adm-griev": "हालिया शिकायतें", "t-footer": "हेल्पलाइन: 1800-444-5555 | support@samajsetu.gov.in"
+        },
+        mr: {
+            "t-welcome": "समाजसेतू मध्ये आपले स्वागत आहे", "t-hero-sub": "तुमचा आवाज महत्त्वाचा आहे! समस्यांची त्वरित तक्रार करा आणि प्रगती तपासा.", "t-get-started": "सुरुवात करा", "t-sign-in": "साइन इन करा", "t-why": "समाजसेतू का?", "t-why-sub": "पाणी, रस्ते आणि वीज तक्रारींसाठी एक व्यासपीठ.",
+            "nav-home": "मुख्यपृष्ठ", "nav-login": "नागरिक लॉगिन", "nav-admin": "प्रशासक पोर्टल", "t-login-title": "तुमच्या खात्यात लॉगिन करा", "lbl-login-id": "फोन नंबर / ईमेल", "btn-login-final": "लॉगिन करा",
+            "t-form-title": "तक्रार सबमिट करा", "lbl-uname": "वापरकर्ता नाव / नाव", "lbl-email": "ईमेल पत्ता", "lbl-phone": "फोन नंबर", "lbl-state": "राज्य", "lbl-place": "ठिकाण / शहर", "lbl-pin": "पिनकोड", "lbl-category": "समस्येचा प्रकार", "lbl-upload": "फोटो अपलोड करा", "btn-submit-issue": "सबमिट करा",
+            "t-status-head": "माझ्या तक्रारीची स्थिती", "t-status-label": "काम सुरू आहे", "prog-1": "नोंदवली", "prog-2": "सोपवली", "prog-3": "दुरुस्ती सुरू", "prog-4": "निकाली", "lbl-feedback": "तुमचा अभिप्राय द्या", "btn-feedback": "अभिप्राय पाठवा",
+            "t-admin-panel": "प्रशासकीय नियंत्रण कक्ष", "adm-res": "निकाली: 840", "adm-pen": "लंबित: 124", "adm-griev": "अलीकडील तक्रारी", "t-footer": "हेल्पलाईन: 1800-444-5555 | support@samajsetu.gov.in"
+        }
+    };
+
+    function translatePage(l) {
+        for (let key in lang[l]) {
+            let element = document.getElementById(key);
+            if (element) {
+                element.innerText = lang[l][key];
+            }
+        }
+    }
+
+    function showPage(id) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        window.scrollTo(0,0);
+    }
+
+    function submitComplaint() {
+        alert("Success! Complaint Filed. Tracking ID: SS-" + Math.floor(Math.random()*10000));
+        showPage('citizen-dashboard');
+    }
+</script>
+</body>
+</html>
