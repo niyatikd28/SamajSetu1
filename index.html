@@ -81,11 +81,12 @@
         .scheme-card { background: white; padding: 20px; border-radius: 8px; border-left: 4px solid var(--gov-blue); box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
 
         /* Forms & Tables */
-        .card { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); max-width: 700px; margin: 0 auto; }
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .card { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); max-width: 800px; margin: 0 auto; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .form-group { margin-bottom: 15px; text-align: left; }
+        .full-width { grid-column: span 2; }
         label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 14px; }
-        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 14px; }
         
         /* Progress */
         .progress-track { background: #eee; height: 12px; border-radius: 10px; margin: 20px 0; overflow: hidden; }
@@ -162,10 +163,24 @@
     <div class="card">
         <h2 id="t-complaint-head">Submit Community Complaint</h2>
         <div class="form-grid">
-            <div class="form-group"><label id="l-user">Username</label><input type="text" id="reg-name" placeholder="Full Name"></div>
-            <div class="form-group"><label id="l-phone">Phone</label><input type="tel" id="reg-phone" placeholder="+91"></div>
+            <div class="form-group"><label id="l-user">Full Name</label><input type="text" id="reg-name" placeholder="John Doe"></div>
+            <div class="form-group"><label id="l-email">Email ID</label><input type="email" id="reg-email" placeholder="example@mail.com"></div>
+            <div class="form-group"><label id="l-phone">Phone Number</label><input type="tel" id="reg-phone" placeholder="+91 0000000000"></div>
+            <div class="form-group">
+                <label id="l-category">Issue Category</label>
+                <select id="reg-cat">
+                    <option value="Street Light Issue">Street Light Issue</option>
+                    <option value="Water Leakage">Water Leakage</option>
+                    <option value="Garbage Issue">Garbage Issue</option>
+                    <option value="Road Damage">Road Damage</option>
+                    <option value="Public Sanitation">Public Sanitation</option>
+                    <option value="Drainage Issue">Drainage Issue</option>
+                </select>
+            </div>
+            <div class="form-group full-width"><label id="l-location">Location / Landmark</label><input type="text" id="reg-loc" placeholder="Near City Hospital, Pincode: 000000"></div>
+            <div class="form-group full-width"><label id="l-upload">Upload Proof (Image/Video)</label><input type="file" id="reg-file" accept="image/*,video/*"></div>
         </div>
-        <button class="btn btn-green" style="width:100%" onclick="submitComplaint()" id="t-btn-submit">Submit & Generate ID</button>
+        <button class="btn btn-green" style="width:100%; margin-top:10px;" onclick="submitComplaint()" id="t-btn-submit">Submit & Generate ID</button>
     </div>
 </div>
 
@@ -176,14 +191,23 @@
             <strong id="disp-issue">Issue: Street Light</strong>
             <span id="disp-status-label" style="background: #fff3cd; padding: 5px 10px; border-radius: 5px; font-size: 12px; font-weight: bold;">PENDING</span>
         </div>
+        <p><strong>Complaint ID:</strong> <span id="disp-id">#SETU-0000</span></p>
         <div class="progress-track"><div id="progress-bar" class="progress-fill"></div></div>
+        <div class="steps">
+            <span>Reported</span><span>Verified</span><span>Processing</span><span>Resolved</span>
+        </div>
     </div>
 
     <div class="feedback-card" id="feedback-section">
         <h3 id="t-feed-h">We Value Your Feedback</h3>
         <p id="t-feed-p">Your experience helps us improve the governance system.</p>
-        <textarea id="feedback-text" rows="3" placeholder="..."></textarea>
-        <button class="btn btn-green" onclick="sendFeedback()" id="t-btn-feed">Send Feedback</button>
+        <div id="feedback-area">
+            <textarea id="feedback-text" rows="3" placeholder="..."></textarea>
+            <button class="btn btn-green" style="margin-top:10px;" onclick="sendFeedback()" id="t-btn-feed">Send Feedback</button>
+        </div>
+        <div id="feedback-msg" style="display:none; color: var(--success); font-weight: bold; margin-top:15px;">
+            Feedback is successfully sent, thank you! ✅
+        </div>
     </div>
 </div>
 
@@ -215,7 +239,8 @@
             "t-feed-h": "We Value Your Feedback",
             "t-feed-p": "Your experience helps us improve the governance system.",
             "t-btn-feed": "Send Feedback", "t-btn-submit": "Submit & Generate ID",
-            "l-user": "Username", "l-phone": "Phone", "t-login-h": "Citizen Login", "t-admin-h": "Admin Login"
+            "l-user": "Full Name", "l-email": "Email ID", "l-phone": "Phone Number", "l-category": "Issue Category", "l-location": "Location / Landmark", "l-upload": "Upload Proof (Image/Video)",
+            "t-login-h": "Citizen Login", "t-admin-h": "Admin Login"
         },
         hi: {
             "t-banner": "नागरिकों को अपनी आवाज़ उठाने के लिए सशक्त बनाना",
@@ -235,7 +260,8 @@
             "t-feed-h": "हम आपकी प्रतिक्रिया को महत्व देते हैं",
             "t-feed-p": "आपका अनुभव हमें शासन प्रणाली को बेहतर बनाने में मदद करता है।",
             "t-btn-feed": "फीडबैक भेजें", "t-btn-submit": "जमा करें और आईडी बनाएं",
-            "l-user": "उपयोगकर्ता नाम", "l-phone": "फ़ोन", "t-login-h": "नागरिक लॉगिन", "t-admin-h": "एडमिन लॉगिन"
+            "l-user": "पूरा नाम", "l-email": "ईमेल आईडी", "l-phone": "फ़ोन नंबर", "l-category": "समस्या श्रेणी", "l-location": "स्थान / लैंडमार्क", "l-upload": "प्रमाण अपलोड करें (फोटो/वीडियो)",
+            "t-login-h": "नागरिक लॉगिन", "t-admin-h": "एडमिन लॉगिन"
         },
         mr: {
             "t-banner": "नागरिकांना त्यांचा आवाज उठवण्यासाठी सक्षम करणे",
@@ -255,7 +281,8 @@
             "t-feed-h": "आम्ही तुमच्या अभिप्रायाला महत्त्व देतो",
             "t-feed-p": "तुमचा अनुभव आम्हाला शासन व्यवस्था सुधारण्यास मदत करतो.",
             "t-btn-feed": "अभिप्राय पाठवा", "t-btn-submit": "सबमिट करा आणि आयडी मिळवा",
-            "l-user": "वापरकर्ता नाव", "l-phone": "फोन", "t-login-h": "नागरिक लॉगिन", "t-admin-h": "अॅडमिन लॉगिन"
+            "l-user": "पूर्ण नाव", "l-email": "ईमेल आयडी", "l-phone": "फोन नंबर", "l-category": "समस्येचा प्रकार", "l-location": "स्थान / ठिकाण", "l-upload": "पुरावा अपलोड करा (फोटो/व्हिडिओ)",
+            "t-login-h": "नागरिक लॉगिन", "t-admin-h": "अॅडमिन लॉगिन"
         }
     };
 
@@ -264,7 +291,6 @@
             let el = document.getElementById(id);
             if (el) el.innerText = translations[lang][id];
         }
-        // Update placeholders separately
         if (lang === 'hi') {
             document.getElementById('schemeSearch').placeholder = "योजना खोजें...";
             document.getElementById('feedback-text').placeholder = "हमें बताएं कि हमने कैसा किया...";
@@ -284,10 +310,14 @@
     }
 
     function submitComplaint() {
+        const issue = document.getElementById('reg-cat').value;
         const id = "SETU-" + Math.floor(1000 + Math.random() * 9000);
+        
+        document.getElementById('disp-issue').innerText = "Issue: " + issue;
         document.getElementById('disp-id').innerText = "#" + id;
         document.getElementById('progress-bar').style.width = "25%";
-        alert("Success! ID: " + id);
+        
+        alert("Successfully registered your complaint!\nYour Complaint ID is: " + id);
         showPage('citizen-dashboard');
     }
 
